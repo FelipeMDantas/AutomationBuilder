@@ -31,7 +31,7 @@ export default function Home() {
                   hover:shadow-xl hover:shadow-neutral-500 duration-500"
                 >
                   <span
-                    className="bg-clip-text text-transparent bg-gradient-to-r text-neutral-700 md:text-center font-sans
+                    className="bg-clip-text text-transparent bg-gradient-to-r text-neutral-400 md:text-center font-sans
                     hover:text-neutral-600 duration-500"
                   >
                     Start For Free Today
