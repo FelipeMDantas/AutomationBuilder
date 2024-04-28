@@ -1,12 +1,26 @@
 import ProfileForm from "@/components/forms/profile-form";
 import ProfilePicture from "./_components/profile-picture";
 import { db } from "@/lib/db";
+import { currentUser } from "@clerk/nextjs/server";
 
 type Props = {};
 
 const Settings = async (props: Props) => {
+  const authUser = await currentUser();
+
+  if (!authUser) return null;
+
   const removeProfileImage = async () => {
     "use server";
+    const response = await db.user.update({
+      where: {
+        clerkId: authUser.id,
+      },
+      data: {
+        profileImage: "",
+      },
+    });
+    return response;
   };
 
   return (
@@ -23,8 +37,8 @@ const Settings = async (props: Props) => {
         </div>
         <ProfilePicture
           onDelete={removeProfileImage}
-          // userImage={user?.profileImage || ""}
-          // onUpload={uploadProfileImage}
+          //userImage={user?.profileImage || ""}
+          //onUpload={uploadProfileImage}
         ></ProfilePicture>
         <ProfileForm />
       </div>

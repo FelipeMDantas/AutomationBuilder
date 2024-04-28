@@ -31,7 +31,7 @@ export default function Home() {
                   hover:shadow-xl hover:shadow-neutral-500 duration-500"
                 >
                   <span
-                    className="bg-clip-text text-transparent bg-gradient-to-r text-neutral-500 md:text-center font-sans
+                    className="bg-clip-text text-transparent bg-gradient-to-r text-neutral-700 md:text-center font-sans
                     hover:text-neutral-600 duration-500"
                   >
                     Start For Free Today
@@ -41,7 +41,7 @@ export default function Home() {
                   className="text-5xl md:text-8xl bg-clip-text text-transparent bg-gradient-to-b from-white 
                 to-neutral-600 font-sans font-bold"
                 >
-                  Automate Your Work With Fizzue
+                  Automate Your Work With Fuzzie
                 </h1>
               </div>
             }
