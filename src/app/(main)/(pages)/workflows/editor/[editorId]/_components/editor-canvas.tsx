@@ -16,6 +16,7 @@ import ReactFlow, {
   addEdge,
 } from "reactflow";
 import "reactflow/dist/style.css";
+import EditorCanvasCardSingle from "./editor-canvas-card-single";
 import {
   ResizableHandle,
   ResizablePanel,
@@ -24,7 +25,9 @@ import {
 import { toast } from "sonner";
 import { usePathname } from "next/navigation";
 import { v4 } from "uuid";
-import EditorCanvasCardSingle from "./editor-canvas-card-single";
+import { EditorCanvasDefaultCardTypes } from "@/lib/constants";
+import FlowInstance from "./flow-instance";
+import EditorCanvasSidebar from "./editor-canvas-sidebar";
 
 const initialNodes: EditorNodeType[] = [];
 
@@ -101,6 +104,7 @@ const EditorCanvas = () => {
         position,
         data: {
           title: type,
+          description: EditorCanvasDefaultCardTypes[type].description,
           completed: false,
           current: false,
           metadata: {},
@@ -247,7 +251,9 @@ const EditorCanvas = () => {
             </svg>
           </div>
         ) : (
-          <div></div>
+          <FlowInstance edges={edges} nodes={nodes}>
+            <EditorCanvasSidebar nodes={nodes} />
+          </FlowInstance>
         )}
       </ResizablePanel>
     </ResizablePanelGroup>
