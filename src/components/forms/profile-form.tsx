@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -27,15 +27,23 @@ const ProfileForm = ({ user, onUpdate }: Props) => {
   const form = useForm<z.infer<typeof EditUserProfileSchema>>({
     mode: "onChange",
     resolver: zodResolver(EditUserProfileSchema),
-    defaultValues: {},
+    defaultValues: {
+      name: user.name,
+      email: user.email,
+    },
   });
 
   const handleSubmit = async (
     values: z.infer<typeof EditUserProfileSchema>
   ) => {
     setIsLoading(true);
+    await onUpdate(values.name);
     setIsLoading(false);
   };
+
+  useEffect(() => {
+    form.reset({ name: user.name, email: user.email });
+  }, [user]);
 
   return (
     <Form {...form}>

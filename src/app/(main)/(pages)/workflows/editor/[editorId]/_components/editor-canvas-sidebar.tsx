@@ -12,7 +12,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { onConnections, onDragStart } from "@/lib/editor-utils";
+import {
+  fetchBotSlackChannels,
+  onConnections,
+  onDragStart,
+} from "@/lib/editor-utils";
+import EditorCanvasIconHelper from "./editor-canvas-card-icon-helper";
 import {
   Accordion,
   AccordionContent,
@@ -36,6 +41,15 @@ const EditorCanvasSidebar = ({ nodes }: Props) => {
       onConnections(nodeConnection, state, googleFile);
     }
   }, [state]);
+
+  useEffect(() => {
+    if (nodeConnection.slackNode.slackAccessToken) {
+      fetchBotSlackChannels(
+        nodeConnection.slackNode.slackAccessToken,
+        setSlackChannels
+      );
+    }
+  }, [nodeConnection]);
 
   return (
     <aside>
@@ -62,6 +76,7 @@ const EditorCanvasSidebar = ({ nodes }: Props) => {
                 }
               >
                 <CardHeader className="flex flex-row items-center gap-4 p-4">
+                  <EditorCanvasIconHelper type={cardKey as EditorCanvasTypes} />
                   <CardTitle className="text-md">
                     {cardKey}
                     <CardDescription>{cardValue.description}</CardDescription>

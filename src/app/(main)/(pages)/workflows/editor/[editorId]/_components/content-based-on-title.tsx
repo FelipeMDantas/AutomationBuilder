@@ -13,6 +13,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { onContentChange } from "@/lib/editor-utils";
 import GoogleFileDetails from "./google-file-details";
+import GoogleDriveFiles from "./google-drive-files";
+import ActionButton from "./action-button";
+import axios from "axios";
+import { toast } from "sonner";
 
 export interface Option {
   value: string;
@@ -48,7 +52,18 @@ const ContentBasedOnTitle = ({
   const title = selectedNode.data.title;
 
   useEffect(() => {
-    const reqGoogle = async () => {};
+    const reqGoogle = async () => {
+      const response: { data: { message: { files: any } } } = await axios.get(
+        "/api/drive"
+      );
+      if (response) {
+        console.log(response.data.message.files[0]);
+        toast.message("Fetched File");
+        setFile(response.data.message.files[0]);
+      } else {
+        toast.error("Something went wrong");
+      }
+    };
     reqGoogle();
   }, []);
 
@@ -107,6 +122,13 @@ const ContentBasedOnTitle = ({
               </CardContent>
             </Card>
           )}
+          {title === "Google Drive" && <GoogleDriveFiles />}
+          <ActionButton
+            currentService={title}
+            nodeConnection={nodeConnection}
+            channels={selectedSlackChannels}
+            setChannels={setSelectedSlackChannels}
+          />
         </div>
       </Card>
     </AccordionContent>
